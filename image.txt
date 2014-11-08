@@ -1,0 +1,64 @@
+import java.awt.EventQueue;
+
+public class Tutorial extends JFrame
+{
+	private ImageIcon image;
+	public Tutorial()
+	{
+		setTitle("Tutorial");
+		setSize(480,480);
+		setVisible(true);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setResizable(false);
+		getContentPane().setLayout(null);
+		
+		
+		JButton btnNewButton = new JButton(new ImageIcon("Images/obs2.gif"));
+		
+		/*try 
+        {
+			//image = new ImageIcon(ImageIO.read(new URL("http://i.imgur.com/6mbHZRU.png")));
+			//image = new ImageIcon(ImageIO.read(getClass().getResource("Images\\obs2.gif")));
+           // Image img = ImageIO.read(getClass().getResource("Images\\obs2.gif"));
+            //btnNewButton.setIcon(new ImageIcon(img));
+			
+        } 
+		/*catch(MalformedURLException mue)
+        {
+            mue.printStackTrace();
+        }*/
+        //catch (IOException ex) {}
+		getContentPane().add(btnNewButton);
+		btnNewButton.setBounds(60,270,40,40);
+		
+		JLabel lblNewLabel = new JLabel();
+		
+		
+		getContentPane().add(lblNewLabel);
+		lblNewLabel.setBackground(Color.BLACK);
+		//lblNewLabel.setForeground(Color.BLACK);
+		lblNewLabel.setOpaque(true);
+		lblNewLabel.setBounds(170, 280, 40, 40);
+		
+		//lblNewLabel.setForeground(Color.BLACK);
+		
+		//btnNewButton.setIcon(image);	
+		
+	}
+	public void paint(Graphics g)
+	{
+		g.drawLine(250, 0,250 ,480 );
+	    //g.drawLine(300, 270,480,270);
+	    g.drawOval(40,150,180,180);
+	    g.drawOval(65, 173, 130, 130);
+	    g.setColor(Color.GRAY);
+	    g.fillOval(65,173, 130, 130);
+	}
+	public static void main(String[] args)
+	{
+		Tutorial t = new Tutorial();
+		
+	}
+}
+
+	

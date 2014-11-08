@@ -1,0 +1,28 @@
+import java.awt.EventQueue;
+
+public class Vor extends JFrame
+{
+	public Vor()
+	{
+		setTitle("Tutorial");
+		setSize(480,480);
+		setVisible(true);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setResizable(false);
+		}
+	public void paint(Graphics g)
+	{
+		g.drawLine(250, 0,250 ,480 );
+	    
+	    g.drawOval(40,150,180,180);
+	    g.drawOval(65, 173, 130, 130);
+	    g.fillOval(65,173, 130, 130);
+	    
+	    
+	}
+	public static void main(String[] args)
+	{
+		Vor t = new Vor();
+		
+	}
+}
