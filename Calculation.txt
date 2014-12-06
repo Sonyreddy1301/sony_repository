@@ -1,0 +1,167 @@
+import java.util.Scanner;
+import java.lang.Math;
+import javax.swing.JFrame;
+
+
+public class Calculation {
+
+	
+	public static int x1 = 0;
+	public static int y1 = 0;
+	public static int x2 = 0;
+	public static int y2 = 0;
+	public static int x3 = 0;
+	public static int y3 = 0;
+	public static  double z1 = 0.0;
+	public static double z2 = 0.0;
+	public static double angle = 0.0;
+	
+	
+	public static double get_angle()
+	{
+		
+	
+	  
+	x1 = Vor.mouseX;
+	y1 = Vor.mouseY;
+	
+	x2 = 341;
+	y2 = 232;
+	
+	 x3 = x1 ;
+	 y3 = y2;
+	 
+	 z1 = Math.abs(y1 - y3);
+	 z2 = Math.abs(x3 - x2);
+	 
+	 double angle = Math.atan(z1/z2)*180/Math.PI;
+	 
+	 System.out.println("value of x1:" + x1);
+	 System.out.println("value of y1:" + y1);
+	 System.out.println("value of x2:" + x2);
+	 System.out.println("value of y2:" + y2);
+	 System.out.println("value of x3:" + x3);
+	 System.out.println("value of y3:" + y3);
+	//System.out.println("value of z1:" + z1);
+	//System.out.println("value of z2:" + z2);
+
+	
+		
+	if(x1 > 341 && y1 <= 232)
+	{
+		angle = 90 - angle;
+	}	
+	
+	if(x1 >= 341 && y1 > 232)
+	{
+		angle = 90 + angle;
+		
+	}	
+	if(x1 < 341 && y1 >= 232)
+	{
+		if(angle == 0.0)
+		{
+			angle = 270;
+		}
+		else
+		{
+		angle = 270 - angle;
+		}
+	}	
+		
+	if(x1 <= 341 && y1 < 232)
+	{
+		
+		angle = 270 + angle;
+		
+	}
+	System.out.println("The angle is:" +angle);
+	return angle;
+	}
+	
+	public static String get_deflection(int plane_x1, int plane_y1, String vor_angle)
+	{
+		String deflection;
+		Double vor_angle_converted;
+		
+		
+		  
+		x1 = Vor.mouseX;
+		y1 = Vor.mouseY;
+		
+		x2 = 341;
+		y2 = 232;
+		
+		 x3 = x1 ;
+		 y3 = y2;
+		 
+		 z1 = Math.abs(y1 - y3);
+		 z2 = Math.abs(x3 - x2);
+		 
+		 double angle = Math.atan(z1/z2)*180/Math.PI;
+		 
+		 System.out.println("value of x1:" + x1);
+		 System.out.println("value of y1:" + y1);
+		 System.out.println("value of x2:" + x2);
+		 System.out.println("value of y2:" + y2);
+		 System.out.println("value of x3:" + x3);
+		 System.out.println("value of y3:" + y3);
+		//System.out.println("value of z1:" + z1);
+		//System.out.println("value of z2:" + z2);
+
+		
+			
+		if(x1 > 341 && y1 <= 232)
+		{
+			angle = 90 - angle;
+		}	
+		
+		if(x1 >= 341 && y1 > 232)
+		{
+			angle = 90 + angle;
+			
+		}	
+		if(x1 < 341 && y1 >= 232)
+		{
+			if(angle == 0.0)
+			{
+				angle = 270;
+			}
+			else
+			{
+			angle = 270 - angle;
+			}
+		}	
+			
+		if(x1 <= 341 && y1 < 232)
+		{
+			
+			angle = 270 + angle;
+			
+		}
+		//System.out.println("The angle is:" +angle);
+		//return angle;
+		
+        vor_angle_converted = Double.parseDouble(vor_angle);
+        
+        if( angle < vor_angle_converted)
+        {
+        	deflection = "Right";
+        }
+        
+        else if( angle > vor_angle_converted)
+        {
+        	deflection = "left";
+        }
+        
+        else
+        	deflection = "no deflection";
+       
+        return deflection;
+        
+		//return null;
+		
+		
+		
+	}
+}

@@ -1,0 +1,16 @@
+import java.lang.Math;
+import java.util.*;
+public class Radioannouncement {
+	private static String Radioannouncement_string = null;
+	
+	
+		
+	
+	public static String get_angle()
+	{
+		Radioannouncement_string = Vor.tf.getText();
+		System.out.println("The Radioannouncement_string is :" + Radioannouncement_string);
+		return Radioannouncement_string;
+	}
+
+}
