@@ -1,0 +1,309 @@
+import java.awt.EventQueue;
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import java.awt.Component;
+import java.awt.EventQueue;
+import java.awt.Graphics;
+import java.awt.Color;
+import java.awt.Window;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.TextField;
+import javax.swing.JTextField;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseMotionListener;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageOp;
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
+
+public class Vor extends JFrame implements ActionListener
+{
+	
+	private ImageIcon image;
+	public static int mouseX = 30;
+	public static int mouseY = 202;
+	JLabel plane;
+	JLabel indicator;
+	JLabel indicator_label;
+	public static JTextField tf;
+	Graphics g;
+	public String frequency;
+	public double frequency_int;
+	public JButton btnNewButton,btn1NewButton,btn2NewButton,btntestNewButton;
+	public int width2;
+	public int height2;
+	AffineTransform at;
+	BufferedImage indicator_img;
+	BufferedImageOp bio;
+	Graphics2D g2d,g2;
+	public int d=0;
+	AffineTransform backup;
+	public int val = 0;
+	double angle = 0.0;
+	public String a = null;
+	public String RadioVal = null;
+	public double radiovalue = 0.0;
+	public boolean vor_indicator;
+	public int default_vor_indicator = 0;
+	
+	public Vor()
+	{
+		setTitle("Vor");
+		setSize(480,480);
+		setVisible(true);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setResizable(false);
+		getContentPane().setLayout(null);
+		
+		btnNewButton = new JButton(new ImageIcon("Images/obs2.gif"));  //for inserting OBS image 
+		btn1NewButton = new JButton(new ImageIcon("Images/up.gif"));  
+		btn2NewButton = new JButton(new ImageIcon("Images/down.gif"));
+		//btntestNewButton = new JButton();
+		
+		tf = new JTextField(10);	// for text field where u can give radio value.
+		tf.setText("112");
+	     getContentPane().add(tf);
+	     tf.setBounds(290,340,110,100);
+	     
+		getContentPane().add(btnNewButton);
+		btnNewButton.setBounds(65,275,40,40);
+		btnNewButton.addActionListener(this);
+		
+		getContentPane().add(btn1NewButton);
+		btn1NewButton.setBounds(400,339,43,50);
+		btn1NewButton.setBackground(Color.PINK);
+		btn1NewButton.addActionListener(this); 
+		
+		getContentPane().add(btn2NewButton);
+		btn2NewButton.setBounds(400,388,43,50);
+		btn2NewButton.setBackground(Color.PINK);
+		btn2NewButton.addActionListener(this); 
+		
+		indicator_label = new JLabel();				// This is for setting the vor indicator.
+		getContentPane().add(indicator_label);
+		indicator_label.setOpaque(true);
+		indicator_label.setBackground(Color.PINK);
+		
+		a = Integer.toString(val);
+		
+		indicator_label.setText(a);
+		indicator_label.setBounds(115,35,25,25);
+		
+		repaint();
+		
+		
+		plane = new JLabel(new ImageIcon("Images/plane.png"));   // plane image
+		getContentPane().add(plane);
+		plane.setOpaque(true);
+		//plane.setBackground(Color.red);
+		plane.setBounds(160,340,30,30);
+		plane.addMouseMotionListener(new moveIconHandler());
+		setVisible(true);
+		repaint();
+		
+				
+	}
+	
+	public void paint(Graphics g)
+	{
+		super.paint(g);
+		at = AffineTransform.getTranslateInstance(13,120);     // indicator image
+		indicator_img = LoadImage("Images/indicator.gif");
+		width2 = indicator_img.getWidth();
+	    height2 = indicator_img.getHeight();
+	      
+	    g2d = (Graphics2D) g;
+	    backup = new AffineTransform();
+	    at.rotate(Math.toRadians(d),width2/2,height2/2);
+	    //((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+	    //d = 50;
+	    //System.out.println(d);
+	    
+	    g2d.drawImage(indicator_img,at,this);
+		    
+	    g.drawLine(250,0,250,480 );
+	    g.drawLine(270,270,460,270);
+	    
+	    g.drawLine(360,170,360,360);
+	    g.drawLine(64,240,195,240);
+	    g.drawLine(84,235,84,245);
+	    g.drawLine(104,235,104,245);
+	    g.drawLine(124,235,124,245);
+	    g.drawLine(144,235,144,245);
+	    g.drawLine(164,235,164,245);
+	    g.drawLine(184,235,184,245);
+	    g.drawRect(74,220,10,10);
+	   // g.drawRect(74,250,10,10);
+	    g.drawRect(170,250,10,10);
+	    //g.drawRect(84,250,10,10);
+	    
+	    if(mouseY >=224)
+	    {
+	    	g.fillRect(74,220,10,10);
+	    	g.drawRect(74,220,10,10);
+	    }
+	    else								// To and From VOR Station
+	    {
+	    		    	
+	    	g.fillRect(74,250,10,10);
+	    	g.drawRect(74,250,10,10);
+	    	
+	    }
+	    if((mouseX == 342 && mouseY == 224)||(mouseX == 345 && mouseY == 224)|| (mouseX == 350 && mouseY == 224)||(mouseX == 353 && mouseY == 224)|| (mouseX == 344 && mouseY == 232)||(mouseX == 344 && mouseY == 231)||(mouseX == 345 && mouseY == 232)|| (mouseX == 343 && mouseY == 230)||(mouseX == 342 && mouseY == 232))
+	    {
+	    	g.fillRect(170,220,10,10);
+	    	g.drawRect(170,220,10,10);
+	    }
+	    else                                   // GD and BD Signal
+	    {
+	    	 g.fillRect(170,250,10,10);
+	    	 g.drawRect(170,250,10,10);
+	    }
+	    g.drawString("FM",90,230);
+	    g.drawString("BD",150,230);
+	    g.drawString("TO",90,260);
+	    g.drawString("GD",150,260);
+	   // g.drawLine(130,170,130,304);
+	   
+	    if(default_vor_indicator ==0)
+	    {
+	    	g.drawLine(130,170,130,304);
+	    }
+	    
+	    if(vor_indicator ==true && default_vor_indicator ==1)
+	    {
+		  g.drawLine(160,170,160,304);
+	    }
+	  
+	  	if(vor_indicator == false && default_vor_indicator == 1)
+  		{
+  			g.drawLine(74,170,74,304);
+  		
+  		}
+	}
+	public void actionPerformed(ActionEvent e) 
+	{
+		
+		if(e.getSource() == btn1NewButton)
+		{
+			frequency = tf.getText();
+			frequency_int = Double.parseDouble(frequency);
+			frequency_int = frequency_int + 0.5;
+			frequency = Double.toString(frequency_int);
+			tf.setText(frequency);
+		 }
+		
+		if( e.getSource() == btn2NewButton )
+		{
+			System.out.println(d);
+			frequency = tf.getText();
+			frequency_int = Double.parseDouble(frequency);
+			frequency_int = frequency_int - 0.5;
+			frequency = Double.toString(frequency_int);
+			tf.setText(frequency);
+		 }
+		
+		if( e.getSource() == btnNewButton )
+		{
+			d = d-1;
+			//System.out.println(d);
+			val = val+1;
+			repaint();
+			a = Integer.toString(val);
+			indicator_label.setText(a);
+		
+		
+			
+		}	
+		
+		
+	}
+	
+	BufferedImage LoadImage(String Filename)
+	{
+		BufferedImage indicator_img = null;
+		
+		try
+		{
+			indicator_img = ImageIO.read(new File(Filename));
+		}
+			catch(IOException e)
+		{
+			
+		}
+		return indicator_img;
+	}
+	
+	
+	
+	private class moveIconHandler extends MouseMotionAdapter 
+	{
+		
+		public void mouseDragged(MouseEvent e) 
+		{
+			//System.out.println("x = " + e.getX() + ", y = " + e.getY()+ "\n");
+			Component c = e.getComponent();
+			System.out.println("x = " + c.getX() + ", y = " + c.getY()+ "\n");
+			c.setLocation( c.getX()+e.getX(), c.getY()+e.getY() );
+			mouseX = c.getX() + e.getX();
+			mouseY = c.getY() + e.getY();
+			//d = d - 1;
+			RadioVal = Radioannouncement.get_angle();
+			System.out.println("The RadioVal is :" + RadioVal);
+			radiovalue = Double.parseDouble(RadioVal);
+			
+			
+			repaint();
+			angle = Calculation.get_angle();
+			System.out.println("The angle is :" +angle);   
+			
+			if(radiovalue == val)
+			{
+				if(angle < radiovalue)
+				{
+					vor_indicator = true;
+					default_vor_indicator = 1;
+				}
+				if(angle > radiovalue)
+				{
+					vor_indicator = false;
+					default_vor_indicator = 1;
+				}
+				if(angle == radiovalue)
+				{
+					default_vor_indicator = 0;
+				}
+			}
+			else
+				default_vor_indicator = 0;
+			
+		}
+		public void mouseMoved(MouseEvent e) 
+		{
+		}
+	}
+		
+	public static void main(String[] args)
+	{
+		Vor s = new Vor();
+		
+	}
+}
+	
+	
+
+	
+
